@@ -1,6 +1,6 @@
 basec: args.o hex.o main.o bin.o decimal.o
 	@gcc -o basec -lm args.o hex.o basec.o decimal.o  binary.o
-	@\rm *.o
+	@rm *.o
 	@echo "Finished cleaning and compiling"
 
 
