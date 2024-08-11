@@ -89,5 +89,5 @@ basec --version
 
 ## License
 
-This project is open source and available under the (GNU-v3 License)[https://github.com/noobMushroom/base_convertor/blob/main/LICENSE].
+This project is open source and available under the [GNU-v3 License](https://github.com/noobMushroom/base_convertor/blob/main/LICENSE).
 
