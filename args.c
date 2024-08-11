@@ -20,33 +20,48 @@ base:\n\
 
 void check_args(int argc, char **argv) {
 
-  if (argc != 2 && argc != 6) {
+  // Check for help or version flags
+  if (argc == 2) {
+    if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
+      usage();
+      exit(EXIT_SUCCESS);
+    } else if (!strcmp(argv[1], "-v") || !strcmp(argv[1], "--version")) {
+      printf("%d\n", 1);
+      exit(EXIT_SUCCESS);
+    } else {
+      fprintf(stderr, "Invalid Option: %s\n", argv[1]);
+      usage();
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  if (argc != 6) {
     usage();
     exit(EXIT_FAILURE);
   }
 
   if ((strcmp(*(argv + 1), "--from")) && (strcmp(*(argv + 1), "-i"))) {
-    printf("Wrong input %s\n\n", *(argv + 1));
+    fprintf(stderr, "Invalid option: %s\n", argv[1]);
     usage();
     exit(EXIT_FAILURE);
   }
 
-  else if ((strcmp(*(argv + 2), "hex")) && (strcmp(*(argv + 2), "bin")) &&
-           (strcmp(*(argv + 2), "dec"))) {
-    printf("Wrong input %s\n\n", *(argv + 2));
+  if ((strcmp(*(argv + 2), "hex")) && (strcmp(*(argv + 2), "bin")) &&
+      (strcmp(*(argv + 2), "dec"))) {
+    fprintf(stderr, "Invalid Base: %s\n", argv[2]);
     usage();
     exit(EXIT_FAILURE);
   }
 
-  else if ((strcmp(*(argv + 4), "--to")) && (strcmp(*(argv + 4), "-o"))) {
-    printf("Wrong input %s\n\n", *(argv + 4));
+  if ((strcmp(*(argv + 4), "--to")) && (strcmp(*(argv + 4), "-o"))) {
+    fprintf(stderr, "Invalid option: %s\n", argv[4]);
     usage();
     exit(EXIT_FAILURE);
   }
 
-  else if ((strcmp(*(argv + 5), "hex")) && (strcmp(*(argv + 5), "bin")) &&
-           (strcmp(*(argv + 5), "dec"))) {
-    printf("Wrong input %s\n\n", *(argv + 5));
+  if ((strcmp(*(argv + 5), "hex")) && (strcmp(*(argv + 5), "bin")) &&
+      (strcmp(*(argv + 5), "dec"))) {
+    fprintf(stderr, "Invalid Base: %s\n", argv[5]);
     usage();
     exit(EXIT_FAILURE);
   }
@@ -60,17 +75,13 @@ base_t parse_base(char *argv) {
   } else if (!strcmp(argv, "dec"))
     return Dec;
 
+  fprintf(stderr, "Invalid Base: %s\n", argv);
   exit(EXIT_FAILURE);
 }
 
 void parse_args(int argc, char **argv) {
   /* Checking if all the args are correct*/
   check_args(argc, argv);
-
-  if (argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))) {
-    usage();
-    exit(EXIT_SUCCESS);
-  }
 
   base_t from_base, to_base;
   char *value;
